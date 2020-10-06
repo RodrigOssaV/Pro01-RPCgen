@@ -14,20 +14,36 @@ extern "C" {
 #endif
 
 
+struct exchange_t {
+	float coin_exchange;
+	int menu_option;
+};
+typedef struct exchange_t exchange_t;
+
 #define AGENDA 1
 #define AGENDA_VER 1
 
 #if defined(__STDC__) || defined(__cplusplus)
-#define divisa 1
-extern  float * divisa_1(float *, CLIENT *);
-extern  float * divisa_1_svc(float *, struct svc_req *);
+#define exchange 1
+extern  float * exchange_1(struct exchange_t *, CLIENT *);
+extern  float * exchange_1_svc(struct exchange_t *, struct svc_req *);
 extern int agenda_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
-#define divisa 1
-extern  float * divisa_1();
-extern  float * divisa_1_svc();
+#define exchange 1
+extern  float * exchange_1();
+extern  float * exchange_1_svc();
 extern int agenda_1_freeresult ();
+#endif /* K&R C */
+
+/* the xdr functions */
+
+#if defined(__STDC__) || defined(__cplusplus)
+extern  bool_t xdr_exchange_t (XDR *, exchange_t*);
+
+#else /* K&R C */
+extern bool_t xdr_exchange_t ();
+
 #endif /* K&R C */
 
 #ifdef __cplusplus
