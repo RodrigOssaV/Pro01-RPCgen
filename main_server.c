@@ -7,13 +7,31 @@
 #include "main.h"
 
 float *
-divisa_1_svc(float *argp, struct svc_req *rqstp)
+exchange_1_svc(struct exchange_t *argp, struct svc_req *rqstp)
 {
+	//coin_exchange = moneda a cambiar
+	//menu_option = opción que vendrá del menu principal
+	float coin_exchange = argp->coin_exchange;
+	int menu_option = argp->menu_option;
+
+	//check_exchange = moneda ya cambiada
+	float check_exchange;
 	static float  result;
 
-	/*
-	 * insert server code here
-	 */
+	if (menu_option==1)
+	{
+		// CLP to DOLAR
+		check_exchange = (coin_exchange*798,60);
+		result = check_exchange;
+	}
+
+	if (menu_option==2)
+	{
+		// CLP to EURO
+		check_exchange = (coin_exchange*937,24);
+		result = check_exchange;
+	}
+		
 
 	return &result;
 }

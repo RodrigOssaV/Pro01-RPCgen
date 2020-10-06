@@ -20,7 +20,7 @@ static void
 agenda_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		float divisa_1_arg;
+		struct exchange_t exchange_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -31,10 +31,10 @@ agenda_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		(void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
 		return;
 
-	case divisa:
-		_xdr_argument = (xdrproc_t) xdr_float;
+	case exchange:
+		_xdr_argument = (xdrproc_t) xdr_exchange_t;
 		_xdr_result = (xdrproc_t) xdr_float;
-		local = (char *(*)(char *, struct svc_req *)) divisa_1_svc;
+		local = (char *(*)(char *, struct svc_req *)) exchange_1_svc;
 		break;
 
 	default:

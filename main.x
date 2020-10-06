@@ -1,6 +1,7 @@
+#include "estructuras.h"
 
 program AGENDA {    
     version AGENDA_VER {
-        float divisa(float ) = 1;
+        float exchange(struct exchange_t) = 1;
     } = 1;
 } = 1;

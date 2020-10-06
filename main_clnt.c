@@ -10,13 +10,13 @@
 static struct timeval TIMEOUT = { 25, 0 };
 
 float *
-divisa_1(float *argp, CLIENT *clnt)
+exchange_1(struct exchange_t *argp, CLIENT *clnt)
 {
 	static float clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, divisa,
-		(xdrproc_t) xdr_float, (caddr_t) argp,
+	if (clnt_call (clnt, exchange,
+		(xdrproc_t) xdr_exchange_t, (caddr_t) argp,
 		(xdrproc_t) xdr_float, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);

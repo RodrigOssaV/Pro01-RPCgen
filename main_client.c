@@ -8,11 +8,11 @@
 
 
 void
-agenda_1(char *host)
+agenda_1(int n, char *host)
 {
 	CLIENT *clnt;
 	float  *result_1;
-	float  divisa_1_arg;
+	struct exchange_t  exchange_1_arg;
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, AGENDA, AGENDA_VER, "udp");
@@ -21,8 +21,7 @@ agenda_1(char *host)
 		exit (1);
 	}
 #endif	/* DEBUG */
-
-	result_1 = divisa_1(&divisa_1_arg, clnt);
+	result_1 = exchange_1(&exchange_1_arg, clnt);
 	if (result_1 == (float *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
@@ -36,12 +35,64 @@ int
 main (int argc, char *argv[])
 {
 	char *host;
-
+	int n;
 	if (argc < 2) {
 		printf ("usage: %s server_host\n", argv[0]);
 		exit (1);
 	}
 	host = argv[1];
-	agenda_1 (host);
+
+	// --- Interfaz para usuario ---
+	int resp_menu;
+	printf("--- PriorityThings ---\n");
+	printf("--- Agenda Electrónica ---\n");
+	printf("--- Menu principal ---\n");
+	printf("(1) --> Convertidor de divisas\n");
+	printf("(2) --> Agenda electrónica\n");
+	printf("(3) --> Calendario\n");
+	printf("(4) --> Post-it\n");
+	printf("(5) --> Salir\n");
+	printf("\nIngrese su respuesta: ");
+	scanf("%i",&resp_menu);
+	fflush(stdin);
+	switch (resp_menu)
+	{
+	case 1:
+		printf("--- Menu divisas ---\n");
+		printf("(1) --> CLP to USD\n");
+		printf("(2) --> Salir menu divisas\n");
+		printf("\nOpción: ");
+		scanf("%i",&n);
+		fflush(stdin);
+		agenda_1(n,host);
+		switch (n)
+		{
+		case 1:
+			//Peso chileno a dolar
+			printf("\nIngrese cantidad a cambiar (CLP): ");
+			break;
+		
+		default:
+			break;
+		}
+
+		break;
+	// -- Agenda electrónica
+	case 2:
+
+		break;
+	// -- Calendario
+	case 3:
+
+		break;
+	// -- Post it
+	case 4:
+
+		break;
+	default:
+	
+		break;
+	}
+
 exit (0);
 }
