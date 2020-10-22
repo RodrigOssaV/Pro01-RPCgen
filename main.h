@@ -14,35 +14,81 @@ extern "C" {
 #endif
 
 
-struct exchange_t {
-	float coin_exchange;
-	int menu_option;
+struct exchange_service {
+	int option_menu;
+	double exchange_coin;
 };
-typedef struct exchange_t exchange_t;
+typedef struct exchange_service exchange_service;
+
+struct virtual_service {
+	int option_menu;
+	double phone_user;
+	char name[40];
+	char lastname[40];
+	char address[40];
+	char mail[40];
+};
+typedef struct virtual_service virtual_service;
+
+struct calendary_service {
+	int year;
+	int month;
+};
+typedef struct calendary_service calendary_service;
+
+struct postit_service {
+	int option_menu;
+	char post_it[50];
+};
+typedef struct postit_service postit_service;
 
 #define AGENDA 1
 #define AGENDA_VER 1
 
 #if defined(__STDC__) || defined(__cplusplus)
-#define exchange 1
-extern  float * exchange_1(struct exchange_t *, CLIENT *);
-extern  float * exchange_1_svc(struct exchange_t *, struct svc_req *);
+#define exchange_virtual 1
+extern  double * exchange_virtual_1(struct exchange_service *, CLIENT *);
+extern  double * exchange_virtual_1_svc(struct exchange_service *, struct svc_req *);
+#define virtual_notebook 2
+extern  char * virtual_notebook_1(struct virtual_service *, CLIENT *);
+extern  char * virtual_notebook_1_svc(struct virtual_service *, struct svc_req *);
+#define calendary_virtual 3
+extern  char * calendary_virtual_1(struct calendary_service *, CLIENT *);
+extern  char * calendary_virtual_1_svc(struct calendary_service *, struct svc_req *);
+#define postit_virtual 4
+extern  char * postit_virtual_1(struct postit_service *, CLIENT *);
+extern  char * postit_virtual_1_svc(struct postit_service *, struct svc_req *);
 extern int agenda_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
-#define exchange 1
-extern  float * exchange_1();
-extern  float * exchange_1_svc();
+#define exchange_virtual 1
+extern  double * exchange_virtual_1();
+extern  double * exchange_virtual_1_svc();
+#define virtual_notebook 2
+extern  char * virtual_notebook_1();
+extern  char * virtual_notebook_1_svc();
+#define calendary_virtual 3
+extern  char * calendary_virtual_1();
+extern  char * calendary_virtual_1_svc();
+#define postit_virtual 4
+extern  char * postit_virtual_1();
+extern  char * postit_virtual_1_svc();
 extern int agenda_1_freeresult ();
 #endif /* K&R C */
 
 /* the xdr functions */
 
 #if defined(__STDC__) || defined(__cplusplus)
-extern  bool_t xdr_exchange_t (XDR *, exchange_t*);
+extern  bool_t xdr_exchange_service (XDR *, exchange_service*);
+extern  bool_t xdr_virtual_service (XDR *, virtual_service*);
+extern  bool_t xdr_calendary_service (XDR *, calendary_service*);
+extern  bool_t xdr_postit_service (XDR *, postit_service*);
 
 #else /* K&R C */
-extern bool_t xdr_exchange_t ();
+extern bool_t xdr_exchange_service ();
+extern bool_t xdr_virtual_service ();
+extern bool_t xdr_calendary_service ();
+extern bool_t xdr_postit_service ();
 
 #endif /* K&R C */
 

@@ -9,15 +9,60 @@
 /* Default timeout can be changed using clnt_control() */
 static struct timeval TIMEOUT = { 25, 0 };
 
-float *
-exchange_1(struct exchange_t *argp, CLIENT *clnt)
+double *
+exchange_virtual_1(struct exchange_service *argp, CLIENT *clnt)
 {
-	static float clnt_res;
+	static double clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, exchange,
-		(xdrproc_t) xdr_exchange_t, (caddr_t) argp,
-		(xdrproc_t) xdr_float, (caddr_t) &clnt_res,
+	if (clnt_call (clnt, exchange_virtual,
+		(xdrproc_t) xdr_exchange_service, (caddr_t) argp,
+		(xdrproc_t) xdr_double, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
+		return (NULL);
+	}
+	return (&clnt_res);
+}
+
+char *
+virtual_notebook_1(struct virtual_service *argp, CLIENT *clnt)
+{
+	static char clnt_res;
+
+	memset((char *)&clnt_res, 0, sizeof(clnt_res));
+	if (clnt_call (clnt, virtual_notebook,
+		(xdrproc_t) xdr_virtual_service, (caddr_t) argp,
+		(xdrproc_t) xdr_char, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
+		return (NULL);
+	}
+	return (&clnt_res);
+}
+
+char *
+calendary_virtual_1(struct calendary_service *argp, CLIENT *clnt)
+{
+	static char clnt_res;
+
+	memset((char *)&clnt_res, 0, sizeof(clnt_res));
+	if (clnt_call (clnt, calendary_virtual,
+		(xdrproc_t) xdr_calendary_service, (caddr_t) argp,
+		(xdrproc_t) xdr_char, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
+		return (NULL);
+	}
+	return (&clnt_res);
+}
+
+char *
+postit_virtual_1(struct postit_service *argp, CLIENT *clnt)
+{
+	static char clnt_res;
+
+	memset((char *)&clnt_res, 0, sizeof(clnt_res));
+	if (clnt_call (clnt, postit_virtual,
+		(xdrproc_t) xdr_postit_service, (caddr_t) argp,
+		(xdrproc_t) xdr_char, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
 	}
