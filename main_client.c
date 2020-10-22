@@ -9,6 +9,14 @@ int option_divisa; /* --> Variable para entrar a los servicios del primer servic
 double exchange_coin; /* --> Variable para almacenar moneda a cambiar */
 double result_divisa; /* --> Variable para obtener resultado del servidor */
 
+int option_agenda; /* --> Variable para entrar a los servicios del segundo servicio */
+
+int option_calendario; /* --> Variable para entrar a los servicios del tercer servicio */
+int year, month; /* --> Variables para almacenar año y mes */
+
+int option_postit; /* --> Variable para entrar a los servicios del cuarto servicio */
+
+
 void
 agenda_1(char *host)
 {
@@ -48,13 +56,23 @@ agenda_1(char *host)
 	break;
 
 	case 2:
+		/* --- asignamos las variables de entrada --- */
+		virtual_notebook_1_arg.option_menu = option_agenda;
+
+
 		result_2 = virtual_notebook_1(&virtual_notebook_1_arg, clnt);
 		if (result_2 == (char *) NULL) {
 			clnt_perror (clnt, "call failed");
 		}
+
+
 	break;
 
 	case 3:
+		/* --- asignamos las variables de entrada --- */
+		calendary_virtual_1_arg.year = year;
+		calendary_virtual_1_arg.month = month;
+		
 		result_3 = calendary_virtual_1(&calendary_virtual_1_arg, clnt);
 		if (result_3 == (char *) NULL) {
 			clnt_perror (clnt, "call failed");
@@ -89,6 +107,8 @@ main (int argc, char *argv[])
 	// --- Interfaz para usuario ---
 	do
 	{
+		fflush(stdin);
+		system("clear");
 		printf("--- PriorityThings ---\n");
 		printf("--- Agenda Electrónica ---\n");
 		printf("--- Menu principal ---\n");
@@ -134,7 +154,7 @@ main (int argc, char *argv[])
 					/* -- pesos chilenos a dolar */
 					fflush(stdin);
 					system("clear");
-					printf("-- CLP to USD--\n");
+					printf("-- CLP to USD --\n");
 					printf("Cantidad ($): ");
 					scanf("%lf", &exchange_coin);
 					agenda_1(host);
@@ -205,7 +225,7 @@ main (int argc, char *argv[])
 					getchar();
 				break;
 
-				default:
+				case 6:
 					/* -- pesos chilenos a peso argentino */
 					fflush(stdin);
 					system("clear");
@@ -226,15 +246,170 @@ main (int argc, char *argv[])
 		
 		case 2:
 		/* --- SEGUNDO SERVICIO --- */
+			do
+			{
+				fflush(stdin);
+				system("clear");
+				printf("--- Menu Agenda Electrónica ---\n");
+				printf("(1) --> Agregar contacto\n");
+				printf("(2) --> Modificar contacto\n");
+				printf("(3) --> Buscar contacto\n");
+				printf("(4) --> Eliminar contacto\n");
+				printf("(5) --> Volver al menu principal\n");
+
+				do
+				{
+					printf("Ingrese su opción: ");
+					scanf("%i", &option_agenda);
+					agenda_1(host);
+				} while (option_agenda < 1 || option_agenda > 5);
+
+				switch (option_agenda)
+				{
+				case 1:
+					fflush(stdin);
+					system("clear");
+					printf("-- Agregar contacto --\n");
+
+					printf("\n");
+					printf("Oprima enter para salir\n");
+					getchar();
+					getchar();
+				break;
+
+				case 2:
+					fflush(stdin);
+					system("clear");
+					printf("-- Modificar contacto --\n");
+					
+					printf("\n");
+					printf("Oprima enter para salir\n");
+					getchar();
+					getchar();
+				break;
+
+				case 3:
+					fflush(stdin);
+					system("clear");
+					printf("-- Buscar contacto --\n");
+					
+					printf("\n");
+					printf("Oprima enter para salir\n");
+					getchar();
+					getchar();
+				break;
+
+				case 4:
+					fflush(stdin);
+					system("clear");
+					printf("-- Eliminar contacto --\n");
+					
+					printf("\n");
+					printf("Oprima enter para salir\n");
+					getchar();
+					getchar();
+				break;
+				}
+				
+			} while (option_agenda != 5);			
 		break;
 
 		case 3:
 		/* --- TERCER SERVICIO --- */
+			do
+			{
+				fflush(stdin);
+				system("clear");
+				printf("--- Menu Calendario ---\n");
+				printf("(1) --> Ver por año\n");
+				printf("(2) --> Ver por mes\n");
+				printf("(3) --> Volver al menu principal\n");
+
+				do
+				{
+					printf("Ingrese su opción: ");
+					scanf("%i", &option_calendario);
+					agenda_1(host);
+				} while (option_calendario < 1 || option_calendario > 3);
+
+				switch (option_calendario)
+				{
+				case 1:
+					fflush(stdin);
+					system("clear");
+					printf("-- Calendario por año --\n");
+					
+					printf("\n");
+					printf("Oprima enter para salir\n");
+					getchar();
+					getchar();
+				break;
+				
+				case 2:
+					fflush(stdin);
+					system("clear");
+					printf("-- Calendario por mes --\n");
+					
+					printf("\n");
+					printf("Oprima enter para salir\n");
+					getchar();
+					getchar();
+				break;
+
+				}
+			} while (option_calendario != 3);
+			
 		break;
 
-		default:
+		case 4:
 		/* --- CUARTO SERVICIO --- */
-			break;
+			do
+			{
+				fflush(stdin);
+				system("clear");
+				printf("--- Menu Post-it ---\n");
+				printf("(1) --> Agregar Post-it (Recordatorio)\n");
+				printf("(2) --> Mostrar Post-it (Recordatorios)\n");
+				printf("(3) --> Volver al menu principal\n");
+
+				do
+				{
+					printf("Ingrese su opción: ");
+					scanf("%i", &option_postit);
+					agenda_1(host);
+				} while (option_postit < 1 || option_postit > 3);
+
+				switch (option_postit)
+				{
+				case 1:
+					/* --- agregar un recordatorio --- */
+					fflush(stdin);
+					system("clear");
+					printf("-- Agregar Post-it --\n");
+					
+					printf("\n");
+					printf("Oprima enter para salir\n");
+					getchar();
+					getchar();
+					break;
+				
+				case 2:
+					/* --- mostrar un recordatorio --- */
+					fflush(stdin);
+					system("clear");
+					printf("-- Mostrar Post-it --\n");
+					
+					printf("\n");
+					printf("Oprima enter para salir\n");
+					getchar();
+					getchar();
+					break;
+				}
+
+
+			} while (option_postit != 3);
+			
+		break;
 		}
 	} while (resp_menu != 5);
 
