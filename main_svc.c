@@ -20,7 +20,10 @@ static void
 agenda_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		struct exchange_t exchange_1_arg;
+		struct exchange_service exchange_virtual_1_arg;
+		struct virtual_service virtual_notebook_1_arg;
+		struct calendary_service calendary_virtual_1_arg;
+		struct postit_service postit_virtual_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -31,10 +34,28 @@ agenda_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		(void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
 		return;
 
-	case exchange:
-		_xdr_argument = (xdrproc_t) xdr_exchange_t;
-		_xdr_result = (xdrproc_t) xdr_float;
-		local = (char *(*)(char *, struct svc_req *)) exchange_1_svc;
+	case exchange_virtual:
+		_xdr_argument = (xdrproc_t) xdr_exchange_service;
+		_xdr_result = (xdrproc_t) xdr_double;
+		local = (char *(*)(char *, struct svc_req *)) exchange_virtual_1_svc;
+		break;
+
+	case virtual_notebook:
+		_xdr_argument = (xdrproc_t) xdr_virtual_service;
+		_xdr_result = (xdrproc_t) xdr_char;
+		local = (char *(*)(char *, struct svc_req *)) virtual_notebook_1_svc;
+		break;
+
+	case calendary_virtual:
+		_xdr_argument = (xdrproc_t) xdr_calendary_service;
+		_xdr_result = (xdrproc_t) xdr_char;
+		local = (char *(*)(char *, struct svc_req *)) calendary_virtual_1_svc;
+		break;
+
+	case postit_virtual:
+		_xdr_argument = (xdrproc_t) xdr_postit_service;
+		_xdr_result = (xdrproc_t) xdr_char;
+		local = (char *(*)(char *, struct svc_req *)) postit_virtual_1_svc;
 		break;
 
 	default:

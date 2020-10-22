@@ -6,32 +6,79 @@
 
 #include "main.h"
 
-float *
-exchange_1_svc(struct exchange_t *argp, struct svc_req *rqstp)
+double *
+exchange_virtual_1_svc(struct exchange_service *argp, struct svc_req *rqstp)
 {
-	//coin_exchange = moneda a cambiar
-	//menu_option = opción que vendrá del menu principal
-	float coin_exchange = argp->coin_exchange;
-	int menu_option = argp->menu_option;
+	static double  result;
 
-	//check_exchange = moneda ya cambiada
-	float check_exchange;
-	static float  result;
+	int option_menu;
+	double exchange_coin;
 
-	if (menu_option==1)
+	option_menu = argp->option_menu;
+	exchange_coin = argp->exchange_coin;
+
+	switch (option_menu)
 	{
-		// CLP to DOLAR
-		check_exchange = (coin_exchange*798,60);
-		result = check_exchange;
+	case 1:
+		result = exchange_coin*(0.0013);
+	break;
+
+	case 2:
+		result = exchange_coin*(0.0011);
+	break;
+
+	case 3:
+		result = exchange_coin*(0.013);
+	break;
+
+	case 4:
+		result = exchange_coin*(0.00097);
+	break;
+
+	case 5:
+		result = exchange_coin*(0.0072);
+	break;
+	
+	default:
+		result = exchange_coin*(0.0099);
+	break;
 	}
 
-	if (menu_option==2)
-	{
-		// CLP to EURO
-		check_exchange = (coin_exchange*937,24);
-		result = check_exchange;
-	}
-		
+	return &result;
+}
+
+char *
+virtual_notebook_1_svc(struct virtual_service *argp, struct svc_req *rqstp)
+{
+	static char  result;
+
+	/*
+	 * insert server code here
+	 */
+
+	return &result;
+}
+
+char *
+calendary_virtual_1_svc(struct calendary_service *argp, struct svc_req *rqstp)
+{
+	static char  result;
+
+	/*
+	 * insert server code here
+	 */
+
+	return &result;
+}
+
+char *
+postit_virtual_1_svc(struct postit_service *argp, struct svc_req *rqstp)
+{
+	static char  result;
+
+	/*
+	 * insert server code here
+	 */
 
 	return &result;
 }
