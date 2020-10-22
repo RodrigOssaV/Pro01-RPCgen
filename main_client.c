@@ -10,6 +10,8 @@ double exchange_coin; /* --> Variable para almacenar moneda a cambiar */
 double result_divisa; /* --> Variable para obtener resultado del servidor */
 
 int option_agenda; /* --> Variable para entrar a los servicios del segundo servicio */
+char name[40]; /* --> Cadena tipo char de largo 40 para almacenar el nombre del contacto */
+char lastname[40]; /* --> Cadena tipo char de largo 40 para almacenar el apellido del contacto */
 
 int option_calendario; /* --> Variable para entrar a los servicios del tercer servicio */
 int year, month; /* --> Variables para almacenar año y mes */
@@ -58,7 +60,8 @@ agenda_1(char *host)
 	case 2:
 		/* --- asignamos las variables de entrada --- */
 		virtual_notebook_1_arg.option_menu = option_agenda;
-
+		virtual_notebook_1_arg.name[40] = name[40];
+		virtual_notebook_1_arg.lastname[40] = lastname[40];
 
 		result_2 = virtual_notebook_1(&virtual_notebook_1_arg, clnt);
 		if (result_2 == (char *) NULL) {
@@ -72,7 +75,7 @@ agenda_1(char *host)
 		/* --- asignamos las variables de entrada --- */
 		calendary_virtual_1_arg.year = year;
 		calendary_virtual_1_arg.month = month;
-		
+
 		result_3 = calendary_virtual_1(&calendary_virtual_1_arg, clnt);
 		if (result_3 == (char *) NULL) {
 			clnt_perror (clnt, "call failed");
@@ -270,7 +273,11 @@ main (int argc, char *argv[])
 					fflush(stdin);
 					system("clear");
 					printf("-- Agregar contacto --\n");
-
+					printf("Nombre: ");
+					scanf("%s",name);
+					printf("Apellido: ");
+					scanf("%s",lastname);
+					agenda_1(host);
 					printf("\n");
 					printf("Oprima enter para salir\n");
 					getchar();
