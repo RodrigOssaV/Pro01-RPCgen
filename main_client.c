@@ -1,6 +1,7 @@
 #include "main.h"
 #include <stdio.h>
-#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
 
 /* --- declaración de variables --- */
 
@@ -12,11 +13,17 @@ double result_divisa; /* --> Variable para obtener resultado del servidor */
 int option_agenda; /* --> Variable para entrar a los servicios del segundo servicio */
 char name[40]; /* --> Cadena tipo char de largo 40 para almacenar el nombre del contacto */
 char lastname[40]; /* --> Cadena tipo char de largo 40 para almacenar el apellido del contacto */
+char address[40]; /* --> Cadena tipo char de largo 40 para almacenar la dirección del contacto */
+char mail[40]; /* --> Cadena tipo char de largo 40 para almacenar el correo del contacto */
+double phone_numer; /* --> variable para almacenar el número teléfono contacto */
+char result_agenda;
 
 int option_calendario; /* --> Variable para entrar a los servicios del tercer servicio */
 int year, month; /* --> Variables para almacenar año y mes */
 
 int option_postit; /* --> Variable para entrar a los servicios del cuarto servicio */
+char post_it[50]; /* --> Variable para almacenar los recordatorios */
+char result_postit; 
 
 
 void
@@ -60,14 +67,20 @@ agenda_1(char *host)
 	case 2:
 		/* --- asignamos las variables de entrada --- */
 		virtual_notebook_1_arg.option_menu = option_agenda;
-		virtual_notebook_1_arg.name[40] = name[40];
-		virtual_notebook_1_arg.lastname[40] = lastname[40];
+		strcpy(virtual_notebook_1_arg.name, name);
+		strcpy(virtual_notebook_1_arg.lastname, lastname);
+		strcpy(virtual_notebook_1_arg.address, address);
+		strcpy(virtual_notebook_1_arg.mail, mail);
+		virtual_notebook_1_arg.phone_user = phone_numer;
+
 
 		result_2 = virtual_notebook_1(&virtual_notebook_1_arg, clnt);
 		if (result_2 == (char *) NULL) {
 			clnt_perror (clnt, "call failed");
 		}
 
+		/* --- obtenemos el resultado --- */
+		result_agenda = *result_2;
 
 	break;
 
@@ -83,10 +96,17 @@ agenda_1(char *host)
 	break;
 
 	default:
+		postit_virtual_1_arg.option_menu = option_postit;
+		strcpy(postit_virtual_1_arg.post_it, post_it);
+
 		result_4 = postit_virtual_1(&postit_virtual_1_arg, clnt);
 		if (result_4 == (char *) NULL) {
 			clnt_perror (clnt, "call failed");
 		}
+		
+		/* --- obtenemos el resultado --- */
+		result_postit = *result_4;
+
 	break;
 	}
 	
@@ -148,7 +168,6 @@ main (int argc, char *argv[])
 				{
 					printf("Ingrese su opción: ");
 					scanf("%i", &option_divisa);
-					agenda_1(host);
 				} while (option_divisa < 1 || option_divisa > 7);
 				
 				switch (option_divisa)
@@ -264,7 +283,6 @@ main (int argc, char *argv[])
 				{
 					printf("Ingrese su opción: ");
 					scanf("%i", &option_agenda);
-					agenda_1(host);
 				} while (option_agenda < 1 || option_agenda > 5);
 
 				switch (option_agenda)
@@ -274,9 +292,15 @@ main (int argc, char *argv[])
 					system("clear");
 					printf("-- Agregar contacto --\n");
 					printf("Nombre: ");
-					scanf("%s",name);
+					scanf("%s", name);
 					printf("Apellido: ");
-					scanf("%s",lastname);
+					scanf("%s", lastname);
+					printf("Dirección: ");
+					scanf("%s", address);
+					printf("Correo: ");
+					scanf("%s", mail);
+					printf("Teléfono: ");
+					scanf("%lf", &phone_numer);
 					agenda_1(host);
 					printf("\n");
 					printf("Oprima enter para salir\n");
@@ -288,7 +312,7 @@ main (int argc, char *argv[])
 					fflush(stdin);
 					system("clear");
 					printf("-- Modificar contacto --\n");
-					
+					/* imprimir resultado acá */
 					printf("\n");
 					printf("Oprima enter para salir\n");
 					getchar();
@@ -299,7 +323,7 @@ main (int argc, char *argv[])
 					fflush(stdin);
 					system("clear");
 					printf("-- Buscar contacto --\n");
-					
+					/* imprimir resultado acá */
 					printf("\n");
 					printf("Oprima enter para salir\n");
 					getchar();
@@ -310,7 +334,7 @@ main (int argc, char *argv[])
 					fflush(stdin);
 					system("clear");
 					printf("-- Eliminar contacto --\n");
-					
+					/* imprimir resultado acá */
 					printf("\n");
 					printf("Oprima enter para salir\n");
 					getchar();
@@ -336,7 +360,6 @@ main (int argc, char *argv[])
 				{
 					printf("Ingrese su opción: ");
 					scanf("%i", &option_calendario);
-					agenda_1(host);
 				} while (option_calendario < 1 || option_calendario > 3);
 
 				switch (option_calendario)
@@ -345,7 +368,10 @@ main (int argc, char *argv[])
 					fflush(stdin);
 					system("clear");
 					printf("-- Calendario por año --\n");
-					
+					printf("Ingrese el año a buscar: ");
+					scanf("%i", &year);
+					agenda_1(host);
+					/* imprimir resultado acá */ 
 					printf("\n");
 					printf("Oprima enter para salir\n");
 					getchar();
@@ -356,7 +382,10 @@ main (int argc, char *argv[])
 					fflush(stdin);
 					system("clear");
 					printf("-- Calendario por mes --\n");
-					
+					printf("Ingrese el mes a buscar: ");
+					scanf("%i", &month);
+					agenda_1(host);
+					/* imprimir resultado acá */
 					printf("\n");
 					printf("Oprima enter para salir\n");
 					getchar();
@@ -383,7 +412,6 @@ main (int argc, char *argv[])
 				{
 					printf("Ingrese su opción: ");
 					scanf("%i", &option_postit);
-					agenda_1(host);
 				} while (option_postit < 1 || option_postit > 3);
 
 				switch (option_postit)
@@ -393,7 +421,10 @@ main (int argc, char *argv[])
 					fflush(stdin);
 					system("clear");
 					printf("-- Agregar Post-it --\n");
-					
+					printf("Escriba Post-it: ");
+					scanf("%s", post_it);
+					agenda_1(host);
+					/* respuesta del servidor */
 					printf("\n");
 					printf("Oprima enter para salir\n");
 					getchar();
@@ -405,14 +436,13 @@ main (int argc, char *argv[])
 					fflush(stdin);
 					system("clear");
 					printf("-- Mostrar Post-it --\n");
-					
+					printf("%c", result_postit);
 					printf("\n");
 					printf("Oprima enter para salir\n");
 					getchar();
 					getchar();
 					break;
 				}
-
 
 			} while (option_postit != 3);
 			
