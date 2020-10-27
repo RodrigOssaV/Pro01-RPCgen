@@ -1,4 +1,4 @@
--# Proyecto 01 - RPCgen
+# Proyecto 01 - RPCgen
 
 Pre-compilador generador de interfaces en C. A partir de una especificación se crea código en C que permite inicializar un cliente y un servidor. 
 Priority Things es un proyecto dedicado al curso Sistema distribuidos que consta de cuatro servicios básicos.
